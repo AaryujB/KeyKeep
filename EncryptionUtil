@@ -1,0 +1,11 @@
+import java.util.*;
+
+public class EncryptionUtil {
+    public static String encrypt(String input){
+        return Base64.getEncoder().encodeToString(input.getBytes());
+    }
+    public static String decrypt(String input){
+        String decodeReturn = new String (Base64.getDecoder().decode(input));
+        return decodeReturn;
+    }
+}
