@@ -1,0 +1,53 @@
+import java.util.*;
+//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
+// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+public class Main {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        PasswordStore store = new PasswordStore();
+
+        System.out.println("Welcome to KeyKeep!");
+        while(true) {
+            System.out.println();
+            System.out.println("1. Create a new account");
+            System.out.println("2. View all accounts");
+            System.out.println("3. Search password by site");
+            System.out.println("4. Exit");
+            System.out.print("Select your choice by typing either \"1\", \"2\", \"3\", or \"4\": ");
+            String choice = in.nextLine();
+
+            switch (choice) {
+                case "1":
+                    System.out.print("Site: ");
+                    String site = in.nextLine();
+                    System.out.print("Username: ");
+                    String username = in.nextLine();
+                    System.out.print("Password: ");
+                    String password = in.nextLine();
+                    store.addAccount(new Account(site, username, password));
+                    System.out.println("Account added");
+                    break;
+                case "2":
+                    for (Account account : store.getAccounts()) {
+                        System.out.println(account.getSite() + " | " + account.getUsername() + " | " + account.getDecodedPassword());
+                    }
+                    break;
+                case "3":
+                    System.out.print("Search site: ");
+                    String searched = in.nextLine();
+                    Account fromSearch = store.searchSite(searched);
+                    if (fromSearch != null) {
+                        System.out.println("Found: " + fromSearch.getUsername() + " | " + fromSearch.getDecodedPassword());
+                    } else {
+                        System.out.println("Not found.");
+                    }
+                    break;
+                case "4":
+                    System.out.println("Goodbye!");
+                    return;
+                default:
+                    System.out.println("Invalid input.");
+            }
+        }
+        }
+}
