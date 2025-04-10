@@ -1,0 +1,41 @@
+public class Account {
+    private String site;
+    private String username;
+    private String encodedPassword;
+
+    public Account(String site, String username, String originalPassword){
+        this.site = site;
+        this.username = username;
+        //using new variable original password because we want to store the encrypted password so we take the original
+        //password and save it using the encrypt function we made in EncriptionUtil
+        this.encodedPassword = EncryptionUtil.encrypt(originalPassword);
+    }
+
+    public String getSite(){
+        return site;
+    }
+    public String getUsername(){
+        return username;
+    }
+    public String getEncodedPassword(){
+        return encodedPassword;
+    }
+    public String getDecodedPassword(){
+        return EncryptionUtil.decrypt(encodedPassword);
+    }
+
+    //convert it to CSV(comma separated values)
+    //Site, Username, Password
+    //Makes it easier to store values and access them
+
+    public String toCSV(){
+        return site + "," + username + "," + encodedPassword + ",";
+    }
+
+    public static Account fromCSV(String csvInput){
+        String[] csvSplit = csvInput.split("");
+        Account account = new Account(csvSplit[0], csvSplit[1], "");
+        account.encodedPassword = csvSplit[2];
+        return account;
+    }
+}
